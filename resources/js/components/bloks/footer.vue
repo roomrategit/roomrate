@@ -1,17 +1,17 @@
 <template>
 
-    <header class="header">
+    <footer class="footer">
         <div class="container">
-            <div class="header__inner">
+            <div class="footer__inner">
                 <a href="" class="logo header__logo">
                     <img src="public/static/img/logo2.svg" alt="">
                 </a>
-                <button class="header__btn m-btn m-btn-accent">
+                <button class="footer__btn m-btn m-btn-accent">
                     <span>Оставить отзыв</span>
                 </button>
             </div>
         </div>
-    </header>
+    </footer>
     
 </template>
 

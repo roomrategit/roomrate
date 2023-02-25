@@ -20,3 +20,5 @@ yarn-error.log
 /package
 /composer.lock
 /composer.json
+/public/static
+/public/

@@ -4,11 +4,13 @@ import { createApp } from "vue";
 import router from './router'
 
 import HeaderComponent from './components/bloks/header.vue'
+import FooterComponent from './components/bloks/footer.vue'
 
 const newApp = {
 
     components: {
-        HeaderComponent
+        HeaderComponent,
+        FooterComponent
     }    
 }
 
