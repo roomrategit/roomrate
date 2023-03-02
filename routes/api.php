@@ -23,11 +23,13 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('register', [RegistrationController::class, 'register']);
+
 Route::group([
     'middleware' => ['api'],
     'prefix' => 'auth'
 ], function ($router) {
-    Route::post('register', [RegistrationController::class, 'register']);
+    
     Route::post('login', [LoginController::class, 'login']);
     Route::get('profile', [ProfileController::class, 'get']);
     Route::put('profile', [ProfileController::class, 'put']);
@@ -35,6 +37,7 @@ Route::group([
     Route::delete('profile', [ProfileController::class, 'delete']);
     Route::post('logout', [ProfileController::class, 'logout']);
 });
+
 
 Route::middleware(['auth.jwt'])->group(function () {
     Route::resource('advertisements', AdvertisementsController::class)->except('index', 'show');
