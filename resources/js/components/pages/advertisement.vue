@@ -1,5 +1,6 @@
 <template>
     <registration-component v-if="register_modal" @status="modalClose" ></registration-component>
+    <login-component v-if="login_modal" @status="loginClose" ></login-component>
     <main class="content">
 
         <section class="apart">
@@ -18,12 +19,16 @@
                         </div>
                     </div>
 
-                    <div class="apart__desc text18">
+                    <div v-if="!login_status" class="apart__desc text18">
+                        <button type="button" @click="author()"></button>
                         Чтобы оставить отзыв, необходимо
-                        <a style="cursor:pointer;">войти</a> <br>
+                        <a style="cursor:pointer;" v-on:click="getLoginForm()">войти</a> <br>
                         или
                         <a style="cursor:pointer;" v-on:click="getRefisterForm()" >зарегистрироваться</a>
                     </div>
+                    <button v-else type="button" class="apart__btn m-btn shadow m-btn-accent">
+                        <span>Оставить новый отзыв</span>
+                    </button>
 
                 </div>
 
@@ -215,17 +220,23 @@
 
 <script>
 import RegistrationComponent from "../bloks/registration"
+import LoginComponent from "../bloks/login"
 import axios from 'axios'
+
 export default {
 
 data(){
     return{
         advertisement: [],
         advertisement_count: 0,
-        register_modal:false
+        register_modal:false,
+        login_modal:false,
+        api_headers: {},
+        login_status: false,
     }
     },
     mounted(){
+        this.setApiHeaders()
         this.getObjects()
     },
     methods: {
@@ -235,18 +246,36 @@ data(){
             axios.get( '/api/advertisements/' + this.$route.params.id ).then(res=>{  
                             
                 this.advertisement = res.data.data
-                this.advertisement_count = res.data.data.reviews.length        
+                this.advertisement_count = res.data.data.reviews.length     
             })        
         },
         getRefisterForm(){
-           this.register_modal = true;   
+           this.register_modal = true  
         },
         modalClose(){
-            this.register_modal = false;
+            this.register_modal = false
+        },
+        getLoginForm(){
+            this.login_modal = true
+        },
+        loginClose(){
+            this.login_modal = false
+        },
+        author(){
+            axios.get('/api/author', this.api_headers ).then(res=>{     
+            })
+        },
+        setApiHeaders(){
+
+            if( localStorage.access_token ){
+                this.api_headers.headers = {'authorization': `Bearer ${ localStorage.access_token }` }
+                this.login_status = true
+            }            
         }
     },  
     components:{
         RegistrationComponent,
+        LoginComponent
     } 
 }
 </script>

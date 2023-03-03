@@ -24,13 +24,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('register', [RegistrationController::class, 'register']);
+Route::post('login', [LoginController::class, 'login']);
 
 Route::group([
     'middleware' => ['api'],
     'prefix' => 'auth'
-], function ($router) {
-    
-    Route::post('login', [LoginController::class, 'login']);
+], function ($router) {    
     Route::get('profile', [ProfileController::class, 'get']);
     Route::put('profile', [ProfileController::class, 'put']);
     Route::put('profile/change-password', [ProfileController::class, 'changePassword']);
@@ -42,7 +41,9 @@ Route::group([
 Route::middleware(['auth.jwt'])->group(function () {
     Route::resource('advertisements', AdvertisementsController::class)->except('index', 'show');
     Route::resource('reviews', ReviewsController::class);
+    Route::get('author', function(){return 10000;} );
 });
+
 
 Route::resource('advertisements', AdvertisementsController::class)->only('index', 'show');
 

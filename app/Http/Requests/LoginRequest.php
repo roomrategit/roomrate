@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     {
         return [
             'email' => 'required_without:phone_number|exists:users',
-            'phone_number' => 'required_without:email|exists:users|string|max:15',
+            //'phone_number' => 'required_without:email|exists:users|string|max:15',
             'password' => 'string|min:8',
         ];
     }

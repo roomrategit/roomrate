@@ -4,27 +4,15 @@
         <div class="modal__dialog">
             <div class="modal__top"> <span @click="closeRegModal()" style="float:right;cursor:pointer;">Close</span>
                 <div class="modal__title text26 mob-text20 bold-text accent2-text">
-                    Pегистрация
+                    Логин
                 </div>
             </div>
             <div class="modal__content">
                 <form action="" class="modal__form">
-                    <div class="modal__fields">
-                        <fieldset class="fg">
-                            <span class="error-span">{{ this.errors.name }}</span>
-                            <input type="text" v-model="user.name" placeholder="Имя">
-                        </fieldset>
-                        <fieldset class="fg">
-                            <span class="error-span">{{ this.errors.surname }}</span>
-                            <input type="text" v-model="user.surname" placeholder="Фамилия">
-                        </fieldset>                        
+                    <div class="modal__fields">                       
                         <fieldset class="fg">                            
                             <span class="error-span">{{ this.errors.email }}</span>
                             <input type="text" v-model="user.email"  placeholder="Электронная почта">
-                        </fieldset>
-                        <fieldset class="fg">
-                            <span class="error-span">{{ this.errors.phone_number }}</span>
-                            <input type="email" v-model="user.phone_number" placeholder="Телефон">
                         </fieldset>
                         <fieldset class="fg">
                             <span class="error-span">{{ this.errors.password }}</span>
@@ -32,7 +20,7 @@
                         </fieldset>                        
                     </div>        
                     <button type="button" @click="registration()" class="modal__btn m-btn shadow m-btn-accent">
-                        <span>Зарегистрироваться</span>
+                        <span>Войти</span>
                     </button>
                 </form>
             </div>
@@ -69,13 +57,13 @@ export default {
         },
         registration(){
 
-            axios.post('/api/register', this.user ).then(res=>{  
-                    
+            axios.post('/api/login', this.user ).then(res=>{  
+                 
                 localStorage.access_token = res.data.access_token
-                localStorage.refresh_token = res.data.refresh_token              
+                localStorage.refresh_token = res.data.refresh_token
                 this.errorsClean()
                 this.closeRegModal()
-                location.reload()
+                location.reload();
 
             }).catch(err => {
 
