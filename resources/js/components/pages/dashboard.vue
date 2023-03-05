@@ -108,7 +108,9 @@ export default {
                     
                     input.value = "" 
                 }
-               
+
+                this.gallery = [] 
+                              
             }).catch(err => { 
                 console.log(err.response) 
             })                  
