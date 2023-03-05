@@ -56,8 +56,15 @@ export default {
 
             axios.get('/api/auth/profile', this.api_headers ).then(res=>{  
 
-                this.user = res.data.data             
-            })
+                this.user = res.data.data                         
+            }).catch(err => {
+
+                console.log(err.response)
+                if( err.response.status == 401 ){
+                    localStorage.clear()
+                    location.reload()
+                }           
+            }) 
         },
         setApiHeaders(){
 

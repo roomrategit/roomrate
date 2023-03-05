@@ -18,6 +18,9 @@ class ProfileController extends Controller
     }
 
     public function get(Request $request) {
+        if(!auth()->check()){
+            return response()->json(['message' => 'Unauthorized'])->setStatusCode(401);
+        }
         return new ProfileResource($this->profileService->get($request));
     }
 

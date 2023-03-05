@@ -35,9 +35,10 @@ class AdvertisementsService {
 
         $img_lst = [];
         foreach ($data['gallery'] as $img) {
-            $file = $this->fromBase64($img['img']);
-            Storage::disk('public')->putFileAs('', $file, sprintf('%d.', $advertisement->id).$file->hashName());
-            $img_lst[] = sprintf('%d.', $advertisement->id).$file->hashName();
+              $img_lst[] = Storage::disk('public')->putFile('gallery', $img);
+        //    $file = $this->fromBase64($img['img']);
+        //    Storage::disk('public')->putFileAs('', $file, sprintf('%d.', $advertisement->id).$file->hashName());
+        //    $img_lst[] = sprintf('%d.', $advertisement->id).$file->hashName();
         }
 
         $advertisement->update([

@@ -49,7 +49,8 @@ trait Imagable {
         $arr = json_decode($arr_str);
         $length = count((array)$arr);
         for ($i = 0; $i < $length; $i++) {
-            $arr[$i] = $this->getStorageLinkAttribute($arr[$i]);
+            //$arr[$i] = $this->getStorageLinkAttribute($arr[$i]);
+            $arr[$i] = '/public/storage/' . $arr[$i];
         }
         return $arr;
     }

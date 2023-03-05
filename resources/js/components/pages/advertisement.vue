@@ -33,33 +33,9 @@
                 </div>
 
                 <div class="gallery">
-                    <div class="gallery-card"> 
-                        <a href="/public/static/img/gallery.webp" data-fancybox="gallery" class="gallery-card__img">
-                            <img src="/public/static/img/gallery.webp" alt="">
-                        </a>
-                    </div>
-
-                    <div class="gallery-card">
-                        <a href="/public/static/img/gallery2.webp" data-fancybox="gallery" class="gallery-card__img">
-                            <img src="/public/static/img/gallery2.webp" alt="">
-                        </a>
-                    </div>
-
-                    <div class="gallery-card">
-                        <a href="/public/static/img/gallery3.webp" data-fancybox="gallery" class="gallery-card__img">
-                            <img src="/public/static/img/gallery3.webp" alt="">
-                        </a>
-                    </div>
-
-                    <div class="gallery-card">
-                        <a href="/public/static/img/gallery4.webp" data-fancybox="gallery" class="gallery-card__img">
-                            <img src="/public/static/img/gallery4.webp" alt="">
-                        </a>
-                    </div>
-
-                    <div class="gallery-card">
-                        <a href="/public/static/img/gallery5.webp" data-fancybox="gallery" class="gallery-card__img">
-                            <img src="/public/static/img/gallery5.webp" alt="">
+                    <div class="gallery-card" v-for="(image, index) in this.advertisement.gallery" :key="index">                       
+                        <a v-bind:href="image" data-fancybox="gallery" class="gallery-card__img">
+                            <img  :src="image" alt="">
                         </a>
                     </div>
                 </div>

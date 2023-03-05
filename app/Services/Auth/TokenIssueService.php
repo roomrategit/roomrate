@@ -10,7 +10,7 @@ use function response;
 abstract class TokenIssueService {
 
     private function setTokenTimeToLive() {
-        $token_validity = 24*60;
+        $token_validity = 72*60;
         auth('api')->factory()->setTTL($token_validity);
     }
 
