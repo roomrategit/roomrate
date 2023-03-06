@@ -50,7 +50,7 @@
             <div class="search__items">
               <div class="search-card" v-for="(advertisement, index) in advertisements" :key="index">
                     <a href="" class="search-card__img">
-                        <img src="public/static/img/apart.webp" alt="">
+                        <img :src="advertisement.gallery[0]" alt="">
                     </a>
                     <div class="search-card__content">
                         <router-link :to="'/advertisement/' + advertisement.id" style="text-decoration:none;">{{  advertisement.title }}</router-link>
