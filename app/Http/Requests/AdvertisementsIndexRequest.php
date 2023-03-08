@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdvertisementsStoreRequest extends FormRequest
+class AdvertisementsIndexRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,12 +24,7 @@ class AdvertisementsStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'string',
-            'rating' => 'numeric',
-            'description' => 'string',
-            'gallery' => 'array',
-            'gallery.*.img' => 'string',
-            'filters' => 'array',
+            'filters' => 'string'
         ];
     }
 }

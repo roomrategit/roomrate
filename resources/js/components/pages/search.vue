@@ -10,31 +10,31 @@
         <div class="filter">
             <div class="filter__fields">
                 <fieldset class="filter__type fg">
-                    <select class="m-select">
-                        <option selected>Квартиру</option>
-                        <option>Дом</option>
-                        <option>Комната</option>
+                    <select v-model="filters.type" class="m-select">
+                        <option value="1">Квартиру</option>
+                        <option value="2">Дом</option>
+                        <option value="3">Комната</option>
                     </select>
                 </fieldset>
                 <div class="filter__radios">
                     <div class="filter__radio">
-                        <input type="radio" name="size">
+                        <input v-model="filters.size" value="4" type="radio" name="size">
                         <label>Студия</label>
                     </div>
                     <div class="filter__radio">
-                        <input type="radio" name="size">
+                        <input v-model="filters.size" value="5" type="radio" name="size">
                         <label>1</label>
                     </div>
                     <div class="filter__radio">
-                        <input type="radio" name="size">
+                        <input v-model="filters.size" value="6" type="radio" name="size">
                         <label>2</label>
                     </div>
                     <div class="filter__radio">
-                        <input type="radio" name="size">
+                        <input v-model="filters.size" value="7" type="radio" name="size">
                         <label>3</label>
                     </div>
                     <div class="filter__radio">
-                        <input type="radio" name="size">
+                        <input v-model="filters.size" value="8" type="radio" name="size">
                         <label>4+</label>
                     </div>
                 </div>
@@ -42,7 +42,7 @@
                     <input type="text" placeholder="Адрес, ЖК или станция метро">
                 </fieldset>
             </div>
-            <button class="filter__btn m-btn m-btn-accent">
+            <button @click="search" class="filter__btn m-btn m-btn-accent">
                 <span>Смотреть отзывы</span>
             </button>
         </div>
@@ -85,7 +85,11 @@ export default {
 
     data(){
       return{
-        advertisements: []
+        advertisements: [],
+        filters: {
+            type: 1,
+            size: 5
+        }
       }
     },
     mounted(){
@@ -95,10 +99,25 @@ export default {
 
       getObjects(){
 
-        axios.get( '/api/advertisements' ).then(res=>{  
-                        
-          this.advertisements = res.data.data
-        })        
+        let filterStr = "";
+
+        for(let filter in this.filters){
+
+            filterStr += this.filters[filter] + ","
+        }
+    
+        axios.get( '/api/advertisements?filters=' + filterStr.slice(0, -1) ).then(res=>{  
+                       
+            this.advertisements = res.data.data
+
+        }).catch(err => {
+
+            console.log(err.response)            
+        })         
+      },
+      search(){
+
+          this.getObjects()
       }
     }
 }

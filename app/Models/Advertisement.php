@@ -18,4 +18,9 @@ class Advertisement extends Model
     ];
 
     protected $table = 'advertisements';
+
+    public function filters_value(){
+        
+        return $this->belongsToMany(Filter_value::class, 'advertisement_filters', 'advertisement_id', 'filter_values_id');
+    }
 }

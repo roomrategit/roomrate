@@ -4,8 +4,10 @@ namespace App\Services\Api;
 
 use App\Http\Requests\AdvertisementsStoreRequest;
 use App\Http\Requests\AdvertisementsUpdateRequest;
+use App\Http\Requests\AdvertisementsIndexRequest;
 use App\Http\Traits\Imagable;
 use App\Models\Advertisement;
+use App\Models\Advertisement_filters;
 use App\Models\User;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Storage;
@@ -14,8 +16,18 @@ class AdvertisementsService {
 
     use Imagable;
 
-    public function index() {
-        return Advertisement::all();
+    public function index(AdvertisementsIndexRequest $storeRequest) {
+
+        $data = $storeRequest->validated();
+
+        $filtersArray = explode( ',', $data['filters']); 
+
+        return Advertisement::whereHas('filters_value', function ($query) use ($filtersArray) {
+
+                $query->whereIn('advertisement_filters.filter_values_id', $filtersArray);
+                
+              },  count($filtersArray) )->get();            
+
     }
 
     public function show($id) {
@@ -44,6 +56,15 @@ class AdvertisementsService {
         $advertisement->update([
             'gallery' => json_encode($img_lst)
         ]);
+
+        foreach( $data['filters'] as $filter ){
+
+            Advertisement_filters::create([
+
+                'advertisement_id' => $advertisement->id,
+                'filter_values_id' => $filter
+            ]);
+        }
 
         return response()->json(['message' => 'Объявление создано!']);
     }

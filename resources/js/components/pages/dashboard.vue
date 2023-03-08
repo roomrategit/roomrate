@@ -27,7 +27,26 @@
                                     </textarea>
                                 </fieldset>
                             </div><br>
-                         
+
+                            <div>
+                                <fieldset class="filter__type fg">
+                                    <select class="m-select" v-model="type">                              
+                                        <option v-for="(type, index) in this.filters.type" :value="type.id" :key="index">
+                                            {{ type.name }}
+                                        </option>
+                                    </select>
+                                </fieldset> 
+                            </div><br>
+                            <div>
+                                <fieldset class="filter__type fg">
+                                    <select class="m-select" v-model="size">                              
+                                        <option v-for="(type, index) in this.filters.size" :value="type.id" :key="index">
+                                            {{ type.name }}
+                                        </option>
+                                    </select>
+                                </fieldset>                            
+                            </div><br>
+                                                    
                             <p> <input type="file" class="file-input" @change="loadFile"> </p><br>                          
                             <p> <input type="file" class="file-input" @change="loadFile"> </p><br>
                             <p> <input type="file" class="file-input" @change="loadFile"> </p><br>
@@ -57,12 +76,19 @@ export default {
                 description: null,
                 rating: 0
             },
-            gallery: []
+            gallery: [],
+            filters:{
+                type:{},
+                size:{}
+            },
+            type:1,
+            size:5
         }
     },
     mounted(){
 
-        this.setApiHeaders()       
+        this.setApiHeaders() 
+        this.setFilters()      
     },
     methods:{
 
@@ -91,6 +117,8 @@ export default {
             formData.append('title', this.adv.title)
             formData.append('description', this.adv.description)
             formData.append('rating', this.adv.rating)
+            formData.append('filters[0]', this.type)
+            formData.append('filters[1]', this.size)
             
             for(let index in this.gallery){
                   
@@ -100,7 +128,7 @@ export default {
             axios.post('/api/advertisements', formData, this.api_headers).then(res => {
 
                 alert(res.data.message) 
-
+              
                 this.adv.title = null
                 this.adv.description = null
 
@@ -113,11 +141,33 @@ export default {
                               
             }).catch(err => { 
                 console.log(err.response) 
-            })                  
+            })                
         }, 
         loadFile(e){
 
             this.gallery.push(e.target.files[0])
+        },
+        loadFilters(filter){
+
+            axios.get('/api/filters/' + filter ).then(res=>{ 
+            
+                if( filter == 1 ){                  
+                    this.filters.type = res.data.filters
+                }
+
+                if( filter == 2 ){                  
+                    this.filters.size = res.data.filters
+                }
+                
+            }).catch(err=>{
+                console.log(err.response)
+            }) 
+                     
+        },
+        setFilters(){
+          
+            this.loadFilters(1)
+            this.loadFilters(2)
         }            
     }
 }

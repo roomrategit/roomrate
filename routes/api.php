@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FiltersController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -46,5 +47,5 @@ Route::middleware(['auth.jwt'])->group(function () {
 
 
 Route::resource('advertisements', AdvertisementsController::class)->only('index', 'show');
-
+Route::resource('filters', FiltersController::class)->only('show');
 

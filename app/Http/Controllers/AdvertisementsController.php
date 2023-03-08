@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AdvertisementsStoreRequest;
 use App\Http\Requests\AdvertisementsUpdateRequest;
+use App\Http\Requests\AdvertisementsIndexRequest;
 use App\Http\Resources\AdvertisementsResource;
 use App\Services\Api\AdvertisementsService;
 use Illuminate\Http\Client\Request;
@@ -18,9 +19,9 @@ class AdvertisementsController extends Controller
     }
 
 
-    public function index()
+    public function index(AdvertisementsIndexRequest $storeRequest)
     {
-        return AdvertisementsResource::collection($this->advertisementsService->index());
+        return AdvertisementsResource::collection($this->advertisementsService->index($storeRequest));
     }
 
     /**
